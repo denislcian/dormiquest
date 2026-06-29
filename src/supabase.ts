@@ -1,7 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY
+const url = import.meta.env.VITE_SUPABASE_URL?.trim()
+const anon = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim()
 
 let client: SupabaseClient | null = null
 
@@ -16,4 +16,11 @@ export function getSupabase(): SupabaseClient | null {
     realtime: { params: { eventsPerSecond: 20 } },
   })
   return client
+}
+
+// Diagnóstico: en el navegador, escribe `__DQ_ONLINE` en la consola.
+// true  = las variables llegaron al build (modo online activo).
+// false = el build NO tiene las variables (revisar env vars / redeploy).
+if (typeof window !== 'undefined') {
+  ;(window as unknown as { __DQ_ONLINE: boolean }).__DQ_ONLINE = isSupabaseConfigured()
 }
