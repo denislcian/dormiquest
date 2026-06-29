@@ -561,3 +561,236 @@ label.field .l {
     font-size: 1.2rem;
   }
 }
+
+/* ---------- Menú principal ---------- */
+.menu {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 72px) clamp(16px, 4vw, 32px);
+}
+
+.menu-hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.menu-logo {
+  font-size: 3.5rem;
+  display: block;
+}
+
+.menu-hero h1 {
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  margin: 8px 0 6px;
+  background: linear-gradient(180deg, #fff 0%, var(--gold) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.menu-hero p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  min-height: 170px;
+}
+
+.menu-card:hover:not(:disabled) {
+  border-color: var(--gold-deep);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.menu-card.primary-card {
+  background: linear-gradient(165deg, rgba(245, 197, 66, 0.16), var(--panel) 70%);
+  border-color: var(--gold-deep);
+}
+
+.menu-card .mc-icon {
+  font-size: 2.2rem;
+}
+.menu-card .mc-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.menu-card .mc-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.menu-note {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.menu-note code,
+.panel code {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.85em;
+}
+
+/* ---------- Lobby / sala ---------- */
+.conn-badge {
+  align-self: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 6px 4px;
+}
+
+.room-code {
+  font-size: clamp(2.6rem, 10vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 0.4em;
+  text-align: center;
+  color: var(--gold);
+  background: var(--bg-2);
+  border: 2px dashed var(--gold-deep);
+  border-radius: 16px;
+  padding: 18px 18px 18px 30px;
+  margin: 8px 0 8px;
+}
+
+.lobby-players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+/* ---------- Panel de pregunta del anfitrión ---------- */
+.buzz-status {
+  text-align: center;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 14px 0;
+  font-size: 1.05rem;
+  border: 1px solid var(--line);
+}
+.buzz-status.open {
+  background: rgba(78, 161, 255, 0.12);
+  border-color: #2f6db0;
+}
+.buzz-status.won {
+  background: rgba(81, 207, 102, 0.14);
+  border-color: var(--good);
+}
+.buzz-status.closed {
+  color: var(--muted);
+}
+
+/* ---------- Vista del concursante ---------- */
+.player-app {
+  max-width: 560px;
+}
+
+.player-wait {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--muted);
+}
+.player-wait .big-wait {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.player-question {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(16px, 4vw, 24px);
+}
+
+.buzzer {
+  width: 100%;
+  margin-top: 18px;
+  padding: 38px 16px;
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  border: none;
+  color: #2a1500;
+  background: radial-gradient(circle at 50% 30%, #ff6b6b, #d62828);
+  box-shadow: 0 10px 0 #9e1b1b, 0 16px 30px rgba(214, 40, 40, 0.5);
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
+}
+.buzzer:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+.buzzer:active:not(:disabled) {
+  transform: translateY(8px);
+  box-shadow: 0 2px 0 #9e1b1b, 0 6px 14px rgba(214, 40, 40, 0.5);
+}
+.buzzer.won {
+  background: radial-gradient(circle at 50% 30%, #69db7c, #2f9e44);
+  box-shadow: 0 10px 0 #1f7a32, 0 16px 30px rgba(47, 158, 68, 0.5);
+  color: #06230f;
+}
+.buzzer:disabled {
+  background: #2a2f55;
+  color: var(--muted);
+  box-shadow: 0 6px 0 #1a1e3c;
+  cursor: not-allowed;
+}
+
+.buzz-hint {
+  text-align: center;
+  color: var(--good);
+  font-weight: 600;
+  margin: 12px 0 0;
+}
+
+.player-scores {
+  margin-top: 18px;
+  display: grid;
+  gap: 6px;
+}
+.pscore-row {
+  display: flex;
+  justify-content: space-between;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 14px;
+}
+.pscore-row.me {
+  border-color: var(--gold-deep);
+  background: rgba(245, 197, 66, 0.08);
+}
+
+@media (max-width: 640px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}

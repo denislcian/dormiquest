@@ -1,61 +1,69 @@
 # 🎲 DormiQuest
 
-Juego de preguntas tipo concurso (estilo *Jeopardy*) para jugar en grupo: un tablero de
-**categorías × dificultad**, el turno va rotando, cada acierto suma puntos y cada fallo resta.
-Pensado para proyectar en una pantalla/tele y que un presentador lo controle.
+Juego de preguntas tipo concurso (estilo *Jeopardy*) para jugar en grupo. Tablero de
+**categorías × dificultad** (100 → 1000 pts); cada acierto suma puntos y cada fallo resta.
+Tiene **dos modos**:
+
+- **🎤 Online con pulsadores** — un *anfitrión* controla el juego desde su pantalla y los
+  *concursantes* se unen desde el móvil. El más rápido en pulsar se lleva el turno. (Necesita
+  Supabase, ver abajo.)
+- **🖥️ Local** — una sola pantalla (tele/portátil), sin internet; el anfitrión adjudica los puntos
+  a mano.
 
 ## Características
 
-- **Jugadores/equipos configurables** (de 1 a 8): añade y quita nombres antes de empezar.
-- **Tablero 6 categorías × 5 niveles** (100 → 1000 puntos).
-- **6 categorías de ejemplo**: Banderas (con foto), Formas de países (silueta), Historia,
-  Matemáticas, League of Legends y Cultura general.
-- **Editor de preguntas** integrado: edita, añade o borra preguntas y pega URLs de imágenes.
-- **Marcador en vivo** con turno actual resaltado y ganador al terminar.
-- Todo se **guarda en el navegador** (localStorage): la partida y tus preguntas no se pierden al recargar.
+- **Pool de 20 categorías**; cada partida saca **5 al azar** (tablero 5 × 5).
+- **100 preguntas** de ejemplo: Banderas (foto), Formas de países (silueta), Historia, Matemáticas,
+  League of Legends, Cultura general, Cine, Música, Deportes, Videojuegos, Geografía, Ciencia,
+  Animales, Comida, Mitología, Anime, Internet, Espacio, Arte y Refranes. Cada casilla tiene varias
+  preguntas y sale una al azar (rejugabilidad).
+- **Pulsadores en tiempo real** (modo online) vía Supabase Realtime.
+- **Editor de preguntas** integrado.
+- **Marcador en vivo** y ganador al terminar.
 
-## Cómo se juega
+## Cómo se juega (online)
 
-1. **Jugadores** → añade a todos los participantes o equipos y pulsa *Empezar partida*.
-2. En el **Tablero**, el jugador del turno elige una casilla (categoría + puntos).
-3. Se abre la pregunta. Tras debatir, pulsa **Mostrar respuesta**.
-4. Adjudica los puntos: **+** al que acertó (o **−** si penalizáis los fallos). Si nadie acierta,
-   pulsa *Pasar*. El turno avanza solo al siguiente jugador.
-5. Al gastar todas las casillas se muestra el **ganador**.
+1. El anfitrión elige **Crear sala** → aparece un **código de 4 letras**.
+2. Cada concursante abre la web, elige **Unirse a una sala**, pone su nombre y el código.
+3. El anfitrión pulsa **Empezar** y elige una casilla del tablero.
+4. La pregunta aparece en los móviles; los concursantes pulsan **¡PULSA!**. El primero gana el turno.
+5. El anfitrión valida: **Correcto** (+pts) o **Fallo** (−pts y se reabre para el resto), revela la
+   respuesta y pasa a la siguiente.
 
-> Las preguntas se editan en la pestaña **✏️ Editor**. Para banderas usa
-> `https://flagcdn.com/w640/CODIGO.png` y para siluetas
-> `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/CODIGO/1024.png`
-> (CODIGO = código ISO del país en minúsculas, p. ej. `es`, `fr`, `jp`).
+## Activar el modo online (Supabase, gratis)
+
+El tiempo real usa **Supabase Realtime** (broadcast + presencia). No hace falta crear tablas ni SQL.
+
+1. Crea una cuenta gratis en [supabase.com](https://supabase.com) y un **New project**.
+2. Ve a **Settings → API** y copia:
+   - **Project URL** → `VITE_SUPABASE_URL`
+   - **anon public key** → `VITE_SUPABASE_ANON_KEY` (es pública, seguro exponerla)
+3. **En local:** copia `.env.example` a `.env.local` y pega ahí las dos claves.
+4. **En Vercel:** *Project → Settings → Environment Variables* → añade `VITE_SUPABASE_URL` y
+   `VITE_SUPABASE_ANON_KEY`, y vuelve a desplegar (*Redeploy*).
+
+Sin estas variables, el modo online aparece desactivado y solo funciona el modo local.
 
 ## Desarrollo local
 
 ```bash
 npm install
-npm run dev      # abre http://localhost:5173
+npm run dev      # http://localhost:5173
 npm run build    # genera dist/ para producción
 ```
 
 ## Desplegar en Vercel
 
-Es un proyecto **Vite estático**, Vercel lo detecta automáticamente.
+Proyecto **Vite estático**, Vercel lo detecta solo.
 
-**Opción A — desde la web (sin instalar nada):**
-1. Sube esta carpeta a un repositorio de GitHub.
-2. En [vercel.com](https://vercel.com) → *Add New… → Project* → importa el repo.
-3. Framework: **Vite** (autodetectado). Build: `npm run build`. Output: `dist`. Pulsa *Deploy*.
-4. Comparte la URL `*.vercel.app` con todos.
-
-**Opción B — desde la terminal:**
-```bash
-npm i -g vercel
-vercel          # sigue el asistente (la primera vez)
-vercel --prod   # despliegue de producción
-```
+1. Sube el repo a GitHub (ya está en `denislcian/dormiquest`).
+2. En [vercel.com](https://vercel.com) → *Add New… → Project* → importa el repo (Framework: **Vite**).
+3. Añade las variables de entorno de Supabase (ver arriba) y pulsa *Deploy*.
+4. Cada `git push` a `main` vuelve a desplegar automáticamente.
 
 ## Notas
 
-- Las imágenes de banderas y siluetas se cargan desde internet (flagcdn.com y GitHub), así que
-  hace falta conexión durante la partida.
-- El estado se guarda por navegador. Si quieres empezar de cero, usa *Reiniciar tablero* o borra
-  los datos del sitio.
+- Las imágenes de banderas y siluetas se cargan desde internet (flagcdn.com y GitHub).
+- El pulsador decide el ganador por **orden de llegada al anfitrión**; con buena conexión es justo
+  para una fiesta (no es un sistema de competición con milisegundos garantizados).
+- El estado del modo local se guarda en el navegador (localStorage).

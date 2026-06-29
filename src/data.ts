@@ -32,7 +32,30 @@ export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'musica', name: 'Música', icon: '🎵' },
   { id: 'deportes', name: 'Deportes', icon: '⚽' },
   { id: 'videojuegos', name: 'Videojuegos', icon: '🎮' },
+  { id: 'geografia', name: 'Geografía', icon: '🌍' },
+  { id: 'ciencia', name: 'Ciencia', icon: '🔬' },
+  { id: 'animales', name: 'Animales', icon: '🐾' },
+  { id: 'comida', name: 'Comida y bebida', icon: '🍔' },
+  { id: 'mitologia', name: 'Mitología', icon: '🏛️' },
+  { id: 'anime', name: 'Anime y manga', icon: '🍥' },
+  { id: 'internet', name: 'Internet y memes', icon: '📱' },
+  { id: 'espacio', name: 'Espacio', icon: '🚀' },
+  { id: 'arte', name: 'Arte', icon: '🎨' },
+  { id: 'refranes', name: 'Refranes y lengua', icon: '📖' },
 ]
+
+/** Número de categorías que entran en el tablero de cada partida. */
+export const CATEGORIES_PER_GAME = 5
+
+/** Elige `n` categorías al azar del pool (sin repetir). */
+export function pickRandomCategories(pool: Category[], n = CATEGORIES_PER_GAME): Category[] {
+  const copy = [...pool]
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
+  }
+  return copy.slice(0, Math.min(n, copy.length))
+}
 
 export const DEFAULT_QUESTIONS: Question[] = [
   // ---------- BANDERAS ----------
@@ -174,4 +197,74 @@ export const DEFAULT_QUESTIONS: Question[] = [
   { id: 'vid-8', categoryId: 'videojuegos', points: 500, prompt: '¿A qué princesa rescata habitualmente Link en la saga "The Legend of Zelda"?', answer: 'La princesa Zelda' },
   { id: 'vid-9', categoryId: 'videojuegos', points: 750, prompt: '¿Qué estudio creó la saga "Grand Theft Auto" (GTA)?', answer: 'Rockstar Games' },
   { id: 'vid-10', categoryId: 'videojuegos', points: 1000, prompt: '¿Cómo se llama la protagonista arqueóloga de la saga "Tomb Raider"?', answer: 'Lara Croft' },
+
+  // ---------- GEOGRAFÍA ----------
+  { id: 'geo-1', categoryId: 'geografia', points: 100, prompt: '¿Cuál es la capital de Francia?', answer: 'París' },
+  { id: 'geo-2', categoryId: 'geografia', points: 250, prompt: '¿Cuál es el río más largo de la península ibérica?', answer: 'El Tajo' },
+  { id: 'geo-3', categoryId: 'geografia', points: 500, prompt: '¿Cuál es el desierto cálido más grande del mundo?', answer: 'El Sahara' },
+  { id: 'geo-4', categoryId: 'geografia', points: 750, prompt: '¿Cuál es el país más poblado del mundo (2024)?', answer: 'India' },
+  { id: 'geo-5', categoryId: 'geografia', points: 1000, prompt: '¿Cuál es la capital de Australia?', answer: 'Canberra' },
+
+  // ---------- CIENCIA ----------
+  { id: 'cie-1', categoryId: 'ciencia', points: 100, prompt: '¿Qué gas absorben las plantas para hacer la fotosíntesis?', answer: 'El dióxido de carbono (CO₂)' },
+  { id: 'cie-2', categoryId: 'ciencia', points: 250, prompt: '¿Cuál es la fórmula química del agua?', answer: 'H₂O' },
+  { id: 'cie-3', categoryId: 'ciencia', points: 500, prompt: '¿Qué científico propuso la teoría de la relatividad?', answer: 'Albert Einstein' },
+  { id: 'cie-4', categoryId: 'ciencia', points: 750, prompt: '¿Cuál es el hueso más largo del cuerpo humano?', answer: 'El fémur' },
+  { id: 'cie-5', categoryId: 'ciencia', points: 1000, prompt: '¿A qué velocidad aproximada viaja la luz en el vacío?', answer: 'Unos 300.000 km/s' },
+
+  // ---------- ANIMALES ----------
+  { id: 'ani-1', categoryId: 'animales', points: 100, prompt: '¿Cuál es el animal más grande del mundo?', answer: 'La ballena azul' },
+  { id: 'ani-2', categoryId: 'animales', points: 250, prompt: '¿Cuántas patas tiene una araña?', answer: '8' },
+  { id: 'ani-3', categoryId: 'animales', points: 500, prompt: '¿Qué felino es conocido como el "rey de la selva"?', answer: 'El león' },
+  { id: 'ani-4', categoryId: 'animales', points: 750, prompt: '¿Cuál es el único mamífero capaz de volar?', answer: 'El murciélago' },
+  { id: 'ani-5', categoryId: 'animales', points: 1000, prompt: '¿Cuál es el animal más rápido del mundo (en picado)?', answer: 'El halcón peregrino' },
+
+  // ---------- COMIDA Y BEBIDA ----------
+  { id: 'com-1', categoryId: 'comida', points: 100, prompt: '¿De qué país es originaria la pizza?', answer: 'Italia' },
+  { id: 'com-2', categoryId: 'comida', points: 250, prompt: '¿Cuál es el ingrediente principal del guacamole?', answer: 'El aguacate' },
+  { id: 'com-3', categoryId: 'comida', points: 500, prompt: '¿De qué semilla se obtiene el chocolate?', answer: 'Del cacao' },
+  { id: 'com-4', categoryId: 'comida', points: 750, prompt: '¿Qué bebida alcohólica se obtiene fermentando uvas?', answer: 'El vino' },
+  { id: 'com-5', categoryId: 'comida', points: 1000, prompt: '¿Cómo se llama el plato japonés de arroz avinagrado con pescado crudo?', answer: 'El sushi' },
+
+  // ---------- MITOLOGÍA ----------
+  { id: 'mit-1', categoryId: 'mitologia', points: 100, prompt: '¿Quién es el dios griego del rayo y rey de los dioses?', answer: 'Zeus' },
+  { id: 'mit-2', categoryId: 'mitologia', points: 250, prompt: '¿Cómo se llama el caballo alado de la mitología griega?', answer: 'Pegaso' },
+  { id: 'mit-3', categoryId: 'mitologia', points: 500, prompt: '¿Cuál es el dios romano de la guerra?', answer: 'Marte' },
+  { id: 'mit-4', categoryId: 'mitologia', points: 750, prompt: '¿Qué héroe griego tenía su único punto débil en el talón?', answer: 'Aquiles' },
+  { id: 'mit-5', categoryId: 'mitologia', points: 1000, prompt: 'En la mitología nórdica, ¿cómo se llama el martillo de Thor?', answer: 'Mjölnir' },
+
+  // ---------- ANIME Y MANGA ----------
+  { id: 'anm-1', categoryId: 'anime', points: 100, prompt: '¿Cómo se llama el ninja rubio que sueña con ser Hokage?', answer: 'Naruto' },
+  { id: 'anm-2', categoryId: 'anime', points: 250, prompt: '¿Qué pirata de goma busca el tesoro "One Piece"?', answer: 'Monkey D. Luffy' },
+  { id: 'anm-3', categoryId: 'anime', points: 500, prompt: 'En "Dragon Ball", ¿de qué raza guerrera es Goku?', answer: 'Saiyan (saiyajin)' },
+  { id: 'anm-4', categoryId: 'anime', points: 750, prompt: 'En "Death Note", ¿qué pasa si escribes el nombre de alguien en el cuaderno?', answer: 'Que esa persona muere' },
+  { id: 'anm-5', categoryId: 'anime', points: 1000, prompt: '¿Qué estudio hizo "El viaje de Chihiro" y "Mi vecino Totoro"?', answer: 'Studio Ghibli' },
+
+  // ---------- INTERNET Y MEMES ----------
+  { id: 'int-1', categoryId: 'internet', points: 100, prompt: '¿En qué app se suben vídeos cortos verticales con bailes y retos?', answer: 'TikTok' },
+  { id: 'int-2', categoryId: 'internet', points: 250, prompt: '¿Qué plataforma de vídeos es propiedad de Google?', answer: 'YouTube' },
+  { id: 'int-3', categoryId: 'internet', points: 500, prompt: '¿Cómo se llama a quienes retransmiten partidas y directos en Twitch?', answer: 'Streamers' },
+  { id: 'int-4', categoryId: 'internet', points: 750, prompt: '¿Qué red social cambió su nombre de "Twitter" a "X" en 2023?', answer: 'Twitter (ahora X)' },
+  { id: 'int-5', categoryId: 'internet', points: 1000, prompt: '¿Qué empresa es dueña de Instagram y WhatsApp?', answer: 'Meta (antes Facebook)' },
+
+  // ---------- ESPACIO ----------
+  { id: 'esp-1', categoryId: 'espacio', points: 100, prompt: '¿Cuál es la estrella más cercana a la Tierra?', answer: 'El Sol' },
+  { id: 'esp-2', categoryId: 'espacio', points: 250, prompt: '¿Qué planeta es conocido como el "planeta rojo"?', answer: 'Marte' },
+  { id: 'esp-3', categoryId: 'espacio', points: 500, prompt: '¿Cómo se llama nuestra galaxia?', answer: 'La Vía Láctea' },
+  { id: 'esp-4', categoryId: 'espacio', points: 750, prompt: '¿Quién fue el primer ser humano en pisar la Luna?', answer: 'Neil Armstrong' },
+  { id: 'esp-5', categoryId: 'espacio', points: 1000, prompt: '¿Cuál es el planeta más cercano al Sol?', answer: 'Mercurio' },
+
+  // ---------- ARTE ----------
+  { id: 'art-1', categoryId: 'arte', points: 100, prompt: '¿Quién pintó "La noche estrellada" y se cortó una oreja?', answer: 'Vincent van Gogh' },
+  { id: 'art-2', categoryId: 'arte', points: 250, prompt: '¿Qué pintor malagueño es famoso por el cubismo y el "Guernica"?', answer: 'Pablo Picasso' },
+  { id: 'art-3', categoryId: 'arte', points: 500, prompt: '¿En qué museo de Madrid está "Las meninas" de Velázquez?', answer: 'El Museo del Prado' },
+  { id: 'art-4', categoryId: 'arte', points: 750, prompt: '¿Qué artista pintó el techo de la Capilla Sixtina?', answer: 'Miguel Ángel' },
+  { id: 'art-5', categoryId: 'arte', points: 1000, prompt: '¿A qué movimiento artístico pertenecen los relojes derretidos de Dalí?', answer: 'El surrealismo' },
+
+  // ---------- REFRANES Y LENGUA ----------
+  { id: 'ref-1', categoryId: 'refranes', points: 100, prompt: 'Completa el refrán: "A caballo regalado…"', answer: '"…no le mires el diente."' },
+  { id: 'ref-2', categoryId: 'refranes', points: 250, prompt: '¿Cuántas letras tiene el abecedario español (incluida la Ñ)?', answer: '27' },
+  { id: 'ref-3', categoryId: 'refranes', points: 500, prompt: 'Completa el refrán: "Más vale pájaro en mano…"', answer: '"…que ciento volando."' },
+  { id: 'ref-4', categoryId: 'refranes', points: 750, prompt: '¿Qué figura literaria compara dos cosas usando "como" (p. ej. "dientes como perlas")?', answer: 'El símil (la comparación)' },
+  { id: 'ref-5', categoryId: 'refranes', points: 1000, prompt: '¿Quién escribió "Don Quijote de la Mancha"?', answer: 'Miguel de Cervantes' },
 ]
