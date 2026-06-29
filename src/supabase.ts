@@ -29,8 +29,13 @@ export function getSupabase(): SupabaseClient | null {
   }
 }
 
-// Diagnóstico: en el navegador, escribe `__DQ_ONLINE` en la consola.
-// true  = credenciales válidas en el build.  false = revisar las env vars.
+// Diagnóstico (consola del navegador):
+//   __DQ_ONLINE → true si las credenciales son válidas en el build.
+//   __DQ_URL    → la Project URL que usa el build (es pública, no secreta).
+//   __DQ_HASKEY → true si la anon key llegó al build (no se muestra la clave).
 if (typeof window !== 'undefined') {
-  ;(window as unknown as { __DQ_ONLINE: boolean }).__DQ_ONLINE = isSupabaseConfigured()
+  const w = window as unknown as Record<string, unknown>
+  w.__DQ_ONLINE = isSupabaseConfigured()
+  w.__DQ_URL = url ?? null
+  w.__DQ_HASKEY = Boolean(anon)
 }
