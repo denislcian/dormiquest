@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/data.ts","./src/main.tsx","./src/types.ts","./src/uselocalstorage.ts","./src/components/board.tsx","./src/components/editor.tsx","./src/components/questionmodal.tsx","./src/components/scoreboard.tsx","./src/components/setup.tsx"],"version":"5.9.3"}
