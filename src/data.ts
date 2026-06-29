@@ -28,6 +28,10 @@ export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'mates', name: 'Matemáticas', icon: '🔢' },
   { id: 'lol', name: 'League of Legends', icon: '⚔️' },
   { id: 'cultura', name: 'Cultura general', icon: '🧠' },
+  { id: 'cine', name: 'Cine y series', icon: '🎬' },
+  { id: 'musica', name: 'Música', icon: '🎵' },
+  { id: 'deportes', name: 'Deportes', icon: '⚽' },
+  { id: 'videojuegos', name: 'Videojuegos', icon: '🎮' },
 ]
 
 export const DEFAULT_QUESTIONS: Question[] = [
@@ -118,4 +122,56 @@ export const DEFAULT_QUESTIONS: Question[] = [
   { id: 'cul-8', categoryId: 'cultura', points: 500, prompt: '¿En qué ciudad (y país) se encuentra la Torre Eiffel?', answer: 'París (Francia)' },
   { id: 'cul-9', categoryId: 'cultura', points: 750, prompt: '¿Cuál es el animal terrestre más rápido del mundo?', answer: 'El guepardo' },
   { id: 'cul-10', categoryId: 'cultura', points: 1000, prompt: '¿Cuál es el único metal que es líquido a temperatura ambiente?', answer: 'El mercurio' },
+
+  // ===================================================================
+  //  CATEGORÍAS NUEVAS — cine, música, deportes y videojuegos
+  // ===================================================================
+
+  // ---------- CINE Y SERIES ----------
+  { id: 'cin-1', categoryId: 'cine', points: 100, prompt: '¿Qué vaquero de juguete es el protagonista de la saga "Toy Story"?', answer: 'Woody' },
+  { id: 'cin-2', categoryId: 'cine', points: 250, prompt: 'En esta saga, Jedi y Sith luchan con sables de luz. ¿Cómo se llama?', answer: 'Star Wars (La guerra de las galaxias)' },
+  { id: 'cin-3', categoryId: 'cine', points: 500, prompt: '¿Quién dirigió la película "Titanic" (1997)?', answer: 'James Cameron' },
+  { id: 'cin-4', categoryId: 'cine', points: 750, prompt: 'En "Juego de Tronos", ¿cuál es el apellido de Jon, Arya y Sansa?', answer: 'Stark' },
+  { id: 'cin-5', categoryId: 'cine', points: 1000, prompt: '¿Qué película surcoreana ganó el Óscar a Mejor Película en 2020?', answer: 'Parásitos (Parasite)' },
+  { id: 'cin-6', categoryId: 'cine', points: 100, prompt: '¿Cómo se llama el mago con una cicatriz en la frente de la saga de J.K. Rowling?', answer: 'Harry Potter' },
+  { id: 'cin-7', categoryId: 'cine', points: 250, prompt: '¿Qué película de Disney tiene a una reina del hielo llamada Elsa?', answer: 'Frozen' },
+  { id: 'cin-8', categoryId: 'cine', points: 500, prompt: '¿Qué actor interpreta a Iron Man (Tony Stark) en el universo Marvel?', answer: 'Robert Downey Jr.' },
+  { id: 'cin-9', categoryId: 'cine', points: 750, prompt: '¿En qué serie española "El Profesor" planea un atraco a la Fábrica de Moneda y Timbre?', answer: 'La casa de papel' },
+  { id: 'cin-10', categoryId: 'cine', points: 1000, prompt: '¿Quién dirigió "Pulp Fiction" (1994)?', answer: 'Quentin Tarantino' },
+
+  // ---------- MÚSICA ----------
+  { id: 'mus-1', categoryId: 'musica', points: 100, prompt: '¿Qué cantante es conocida como la "Reina del Pop"?', answer: 'Madonna' },
+  { id: 'mus-2', categoryId: 'musica', points: 250, prompt: '¿De qué país (y ciudad) es la banda The Beatles?', answer: 'Reino Unido (Liverpool, Inglaterra)' },
+  { id: 'mus-3', categoryId: 'musica', points: 500, prompt: '¿Qué artista británico canta "Shape of You"?', answer: 'Ed Sheeran' },
+  { id: 'mus-4', categoryId: 'musica', points: 750, prompt: '¿Cómo se llama el cantante de Queen, fallecido en 1991?', answer: 'Freddie Mercury' },
+  { id: 'mus-5', categoryId: 'musica', points: 1000, prompt: '¿Qué grupo sueco es famoso por "Dancing Queen" y "Mamma Mia"?', answer: 'ABBA' },
+  { id: 'mus-6', categoryId: 'musica', points: 100, prompt: '¿Qué instrumento de 6 cuerdas es básico en el rock y el flamenco?', answer: 'La guitarra' },
+  { id: 'mus-7', categoryId: 'musica', points: 250, prompt: '¿Qué artista colombiana es famosa por "Hips Don\'t Lie" y "Waka Waka"?', answer: 'Shakira' },
+  { id: 'mus-8', categoryId: 'musica', points: 500, prompt: '¿Qué banda canta "Bohemian Rhapsody"?', answer: 'Queen' },
+  { id: 'mus-9', categoryId: 'musica', points: 750, prompt: '¿Cuántas cuerdas tiene un bajo eléctrico estándar?', answer: '4' },
+  { id: 'mus-10', categoryId: 'musica', points: 1000, prompt: '¿Qué artista grabó "Thriller", el álbum más vendido de la historia?', answer: 'Michael Jackson' },
+
+  // ---------- DEPORTES ----------
+  { id: 'dep-1', categoryId: 'deportes', points: 100, prompt: '¿Cuántos jugadores tiene un equipo de fútbol en el campo, incluido el portero?', answer: '11' },
+  { id: 'dep-2', categoryId: 'deportes', points: 250, prompt: '¿En qué deporte destaca Rafael Nadal?', answer: 'Tenis' },
+  { id: 'dep-3', categoryId: 'deportes', points: 500, prompt: '¿Cada cuántos años se celebran los Juegos Olímpicos de verano?', answer: 'Cada 4 años' },
+  { id: 'dep-4', categoryId: 'deportes', points: 750, prompt: '¿Qué país ganó el Mundial de fútbol de 2010, celebrado en Sudáfrica?', answer: 'España' },
+  { id: 'dep-5', categoryId: 'deportes', points: 1000, prompt: 'En ciclismo, ¿en qué gran vuelta se lleva la "maglia rosa" el líder?', answer: 'El Giro de Italia' },
+  { id: 'dep-6', categoryId: 'deportes', points: 100, prompt: '¿En qué deporte se anota un "triple" o un "mate"?', answer: 'Baloncesto' },
+  { id: 'dep-7', categoryId: 'deportes', points: 250, prompt: '¿Cuántos anillos tiene el símbolo olímpico?', answer: '5' },
+  { id: 'dep-8', categoryId: 'deportes', points: 500, prompt: '¿Qué jugador argentino levantó el Mundial de fútbol de 2022?', answer: 'Lionel Messi' },
+  { id: 'dep-9', categoryId: 'deportes', points: 750, prompt: '¿En qué país se inventó el judo?', answer: 'Japón' },
+  { id: 'dep-10', categoryId: 'deportes', points: 1000, prompt: '¿Cuántos puntos vale un ensayo ("try") en el rugby?', answer: '5 puntos' },
+
+  // ---------- VIDEOJUEGOS ----------
+  { id: 'vid-1', categoryId: 'videojuegos', points: 100, prompt: '¿Cómo se llama el fontanero bigotudo mascota de Nintendo?', answer: 'Mario' },
+  { id: 'vid-2', categoryId: 'videojuegos', points: 250, prompt: '¿En qué juego construyes y exploras un mundo hecho de bloques?', answer: 'Minecraft' },
+  { id: 'vid-3', categoryId: 'videojuegos', points: 500, prompt: '¿Qué empresa fabrica la consola PlayStation?', answer: 'Sony' },
+  { id: 'vid-4', categoryId: 'videojuegos', points: 750, prompt: '¿Cómo se llama el erizo azul mascota de SEGA?', answer: 'Sonic' },
+  { id: 'vid-5', categoryId: 'videojuegos', points: 1000, prompt: '¿En qué año salió la primera PlayStation en Japón?', answer: '1994' },
+  { id: 'vid-6', categoryId: 'videojuegos', points: 100, prompt: '¿De qué color es Pikachu, de Pokémon?', answer: 'Amarillo' },
+  { id: 'vid-7', categoryId: 'videojuegos', points: 250, prompt: '¿Cómo se llama el "battle royale" de Epic Games con bailes y construcción?', answer: 'Fortnite' },
+  { id: 'vid-8', categoryId: 'videojuegos', points: 500, prompt: '¿A qué princesa rescata habitualmente Link en la saga "The Legend of Zelda"?', answer: 'La princesa Zelda' },
+  { id: 'vid-9', categoryId: 'videojuegos', points: 750, prompt: '¿Qué estudio creó la saga "Grand Theft Auto" (GTA)?', answer: 'Rockstar Games' },
+  { id: 'vid-10', categoryId: 'videojuegos', points: 1000, prompt: '¿Cómo se llama la protagonista arqueóloga de la saga "Tomb Raider"?', answer: 'Lara Croft' },
 ]

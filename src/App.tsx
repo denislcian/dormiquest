@@ -16,10 +16,10 @@ export default function App() {
     0,
   )
   const [answered, setAnswered] = useLocalStorage<string[]>('dormiquest.answered', [])
-  // La versión (v2) se sube cuando cambia el banco de preguntas por defecto,
+  // La versión (v3) se sube cuando cambia el banco de preguntas por defecto,
   // para que se cargue el nuevo en navegadores que ya tenían el anterior guardado.
   const [questions, setQuestions] = useLocalStorage<Question[]>(
-    'dormiquest.questions.v2',
+    'dormiquest.questions.v3',
     DEFAULT_QUESTIONS,
   )
 
