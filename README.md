@@ -1,4 +1,4 @@
-# ⚖️ El Tribunal
+# 🎲 DormiQuest
 
 Juego de preguntas tipo concurso (estilo *Jeopardy*) para jugar en grupo: un tablero de
 **categorías × dificultad**, el turno va rotando, cada acierto suma puntos y cada fallo resta.

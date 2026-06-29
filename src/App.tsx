@@ -10,16 +10,16 @@ import { Editor } from './components/Editor'
 
 export default function App() {
   const [phase, setPhase] = useState<Phase>('setup')
-  const [players, setPlayers] = useLocalStorage<Player[]>('tribunal.players', [])
+  const [players, setPlayers] = useLocalStorage<Player[]>('dormiquest.players', [])
   const [currentPlayerIndex, setCurrentPlayerIndex] = useLocalStorage<number>(
-    'tribunal.turn',
+    'dormiquest.turn',
     0,
   )
-  const [answered, setAnswered] = useLocalStorage<string[]>('tribunal.answered', [])
+  const [answered, setAnswered] = useLocalStorage<string[]>('dormiquest.answered', [])
   // La versión (v2) se sube cuando cambia el banco de preguntas por defecto,
   // para que se cargue el nuevo en navegadores que ya tenían el anterior guardado.
   const [questions, setQuestions] = useLocalStorage<Question[]>(
-    'tribunal.questions.v2',
+    'dormiquest.questions.v2',
     DEFAULT_QUESTIONS,
   )
 
@@ -85,8 +85,8 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <span className="logo">⚖️</span>
-          <h1>El Tribunal</h1>
+          <span className="logo">🎲</span>
+          <h1>DormiQuest</h1>
         </div>
         <nav className="toolbar">
           {phase !== 'board' && (
