@@ -12,9 +12,10 @@ type Screen = 'menu' | 'local' | 'host' | 'player' | 'editor'
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('menu')
-  // Banco de preguntas compartido (local, anfitrión y editor). v4 = pool de 20 categorías.
+  // Banco de preguntas compartido (local, anfitrión y editor). v5 = 22 categorías (series,
+  // famosos, logos, emoji…) + preguntas de actualidad.
   const [questions, setQuestions] = useLocalStorage<Question[]>(
-    'dormiquest.questions.v4',
+    'dormiquest.questions.v5',
     DEFAULT_QUESTIONS,
   )
 

@@ -6,6 +6,7 @@ import { Scoreboard } from './Scoreboard'
 import { Board, cellKey } from './Board'
 import { QuestionModal } from './QuestionModal'
 import { Setup } from './Setup'
+import { Podium } from './Podium'
 
 type Props = {
   questions: Question[]
@@ -73,10 +74,6 @@ export function LocalGame({ questions, onBack }: Props) {
     setPhase('board')
   }
 
-  const ranked = [...players].sort((a, b) => b.score - a.score)
-  const winner = ranked[0]
-  const hasTie = ranked.length > 1 && ranked[1].score === winner?.score
-
   return (
     <div className="app">
       <header className="topbar">
@@ -105,19 +102,11 @@ export function LocalGame({ questions, onBack }: Props) {
         <>
           <Scoreboard players={players} currentPlayerIndex={currentPlayerIndex} />
 
-          {boardFinished && winner && (
-            <div className="winner-banner">
-              {hasTie ? (
-                <div className="big">¡Empate en cabeza con {winner.score} pts! 🤝</div>
-              ) : (
-                <div className="big">
-                  🏆 Gana {winner.name} con {winner.score} pts
-                </div>
-              )}
-              <button className="primary" onClick={newGame} style={{ marginTop: 10 }}>
-                Jugar otra vez
-              </button>
-            </div>
+          {boardFinished && players.length > 0 && (
+            <Podium
+              entries={players.map((p) => ({ name: p.name, score: p.score }))}
+              onRestart={newGame}
+            />
           )}
 
           <Board

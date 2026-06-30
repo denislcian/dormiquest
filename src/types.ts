@@ -68,4 +68,8 @@ export type PublicState = {
   revealed: boolean
   /** Solo presente cuando `revealed` es true. */
   answer?: string
+  /** Segundos restantes para responder (cuenta atrás), o null si no hay. */
+  secondsLeft: number | null
+  /** El tablero se ha completado (mostrar podio). */
+  finished: boolean
 }

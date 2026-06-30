@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PublicState, Self } from '../types'
 import { getSelfId } from '../identity'
 import { useRoom } from '../useRoom'
+import { Podium } from './Podium'
 
 type Props = {
   onBack: () => void
@@ -149,7 +150,11 @@ export function PlayerGame({ onBack }: Props) {
 
       {connecting && !notFound && <div className="empty">Conectando con la sala {code}…</div>}
 
-      {state && !notFound && (
+      {state && !notFound && state.finished && (
+        <Podium entries={ranked.map((p) => ({ name: p.name, score: state.scores[p.id] ?? 0 }))} />
+      )}
+
+      {state && !notFound && !state.finished && (
         <>
           {!current ? (
             <div className="player-wait">
@@ -182,6 +187,12 @@ export function PlayerGame({ onBack }: Props) {
                 <div className="answer">
                   <div className="label">Respuesta correcta</div>
                   <div className="value">{state.answer}</div>
+                </div>
+              )}
+
+              {state.secondsLeft != null && (
+                <div className={'player-countdown' + (state.secondsLeft <= 3 ? ' urgent' : '')}>
+                  ⏱ {state.secondsLeft}
                 </div>
               )}
 

@@ -12,14 +12,18 @@ Tiene **dos modos**:
 
 ## Características
 
-- **Pool de 20 categorías**; cada partida saca **5 al azar** (tablero 5 × 5).
-- **100 preguntas** de ejemplo: Banderas (foto), Formas de países (silueta), Historia, Matemáticas,
+- **Pool de 22 categorías**; cada partida saca **5 al azar** (tablero 5 × 5).
+- **+180 preguntas** de ejemplo: Banderas (foto), Formas de países (silueta), Historia, Matemáticas,
   League of Legends, Cultura general, Cine, Música, Deportes, Videojuegos, Geografía, Ciencia,
-  Animales, Comida, Mitología, Anime, Internet, Espacio, Arte y Refranes. Cada casilla tiene varias
-  preguntas y sale una al azar (rejugabilidad).
+  Animales, Comida, Mitología, Anime, Internet, Espacio, **Series y streaming, Famosos y redes,
+  Marcas y logos** (con imágenes) y **Adivina el emoji**, además de algunas de **actualidad**. Cada
+  casilla tiene varias preguntas y sale una al azar (rejugabilidad).
 - **Pulsadores en tiempo real** (modo online) vía Supabase Realtime.
+- **Temporizador de respuesta**: al pulsar, cuenta atrás configurable; si se agota, cuenta como fallo
+  y se reabre el pulsador.
+- **Podio final animado** (1º/2º/3º) al completar el tablero.
 - **Editor de preguntas** integrado.
-- **Marcador en vivo** y ganador al terminar.
+- **Marcador en vivo**.
 
 ## Cómo se juega (online)
 

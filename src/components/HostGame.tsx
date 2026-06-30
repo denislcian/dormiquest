@@ -4,6 +4,7 @@ import { DEFAULT_CATEGORIES, pickRandomCategories } from '../data'
 import { getSelfId, makeRoomCode } from '../identity'
 import { useRoom } from '../useRoom'
 import { Board, cellKey } from './Board'
+import { Podium } from './Podium'
 
 type Props = {
   questions: Question[]
@@ -26,6 +27,11 @@ export function HostGame({ questions, onBack }: Props) {
   const [missed, setMissed] = useState<string[]>([])
   const [revealed, setRevealed] = useState(false)
 
+  // Temporizador de respuesta
+  const [timerEnabled, setTimerEnabled] = useState(true)
+  const [answerSeconds, setAnswerSeconds] = useState(12)
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(null)
+
   // Refs para resolver el pulsador de forma autoritaria e inmediata.
   const buzzOpenRef = useRef(false)
   const buzzWinnerRef = useRef<Self | null>(null)
@@ -42,6 +48,14 @@ export function HostGame({ questions, onBack }: Props) {
     missedRef.current = v
     setMissed(v)
   }
+
+  const playableCells = useMemo(() => {
+    const allowed = new Set(categories.map((c) => c.id))
+    const set = new Set<string>()
+    for (const q of questions) if (allowed.has(q.categoryId)) set.add(cellKey(q.categoryId, q.points))
+    return set.size
+  }, [questions, categories])
+  const boardFinished = step === 'playing' && playableCells > 0 && answered.length >= playableCells
 
   const buildPublic = (): PublicState => {
     const allScores: Record<string, number> = {}
@@ -67,6 +81,8 @@ export function HostGame({ questions, onBack }: Props) {
       missed,
       revealed,
       answer: revealed ? current?.answer : undefined,
+      secondsLeft,
+      finished: boardFinished,
     }
   }
   // Mantener una referencia fresca para responder a `hello`.
@@ -91,7 +107,34 @@ export function HostGame({ questions, onBack }: Props) {
   useEffect(() => {
     if (status === 'connected') sync(publicRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, step, categories, answered, scores, players, current, buzzOpen, buzzWinner, missed, revealed])
+  }, [status, step, categories, answered, scores, players, current, buzzOpen, buzzWinner, missed, revealed, secondsLeft])
+
+  // Temporizador: cuando alguien se adelanta, cuenta atrás para responder.
+  useEffect(() => {
+    if (!timerEnabled || !buzzWinner || revealed) {
+      setSecondsLeft(null)
+      return
+    }
+    const loser = buzzWinner
+    const pts = current?.points ?? 0
+    let s = answerSeconds
+    setSecondsLeft(s)
+    const iv = setInterval(() => {
+      s -= 1
+      setSecondsLeft(s)
+      if (s <= 0) {
+        clearInterval(iv)
+        // Se acabó el tiempo = fallo: penaliza y reabre el pulsador.
+        setScores((sc) => ({ ...sc, [loser.id]: (sc[loser.id] ?? 0) - pts }))
+        setMissedB([...missedRef.current, loser.id])
+        setBuzzWinnerB(null)
+        setBuzzOpenB(true)
+        setSecondsLeft(null)
+      }
+    }, 1000)
+    return () => clearInterval(iv)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buzzWinner, timerEnabled, revealed, answerSeconds])
 
   // ---------- Acciones del anfitrión ----------
   const pickCell = (q: Question) => {
@@ -154,14 +197,6 @@ export function HostGame({ questions, onBack }: Props) {
   }
 
   const ranked = [...players].sort((a, b) => (scores[b.id] ?? 0) - (scores[a.id] ?? 0))
-  const playableCells = useMemo(() => {
-    const allowed = new Set(categories.map((c) => c.id))
-    const set = new Set<string>()
-    for (const q of questions) if (allowed.has(q.categoryId)) set.add(cellKey(q.categoryId, q.points))
-    return set.size
-  }, [questions, categories])
-  const boardFinished = step === 'playing' && playableCells > 0 && answered.length >= playableCells
-  const winner = ranked[0]
 
   const connBadge =
     status === 'connected' ? '🟢 En línea' : status === 'error' ? '🔴 Sin conexión' : '🟡 Conectando…'
@@ -227,6 +262,30 @@ export function HostGame({ questions, onBack }: Props) {
             ))}
           </div>
 
+          <h3 className="section">Temporizador de respuesta</h3>
+          <div className="row-2">
+            <label className="row-2" style={{ gap: 8, marginBottom: 0 }}>
+              <input
+                type="checkbox"
+                checked={timerEnabled}
+                onChange={(e) => setTimerEnabled(e.target.checked)}
+              />
+              Cuenta atrás al pulsar
+            </label>
+            <select
+              value={answerSeconds}
+              onChange={(e) => setAnswerSeconds(Number(e.target.value))}
+              disabled={!timerEnabled}
+              style={{ width: 'auto' }}
+            >
+              {[8, 10, 12, 15, 20].map((s) => (
+                <option key={s} value={s}>
+                  {s} s
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="modal-actions">
             <button onClick={reshuffle}>🎲 Otras 5 categorías</button>
             <button className="primary" onClick={startGame} disabled={players.length === 0}>
@@ -248,15 +307,11 @@ export function HostGame({ questions, onBack }: Props) {
             ))}
           </div>
 
-          {boardFinished && winner && (
-            <div className="winner-banner">
-              <div className="big">
-                🏆 Gana {winner.name} con {scores[winner.id] ?? 0} pts
-              </div>
-              <button className="primary" onClick={restart} style={{ marginTop: 10 }}>
-                Jugar otra vez
-              </button>
-            </div>
+          {boardFinished && ranked.length > 0 && (
+            <Podium
+              entries={ranked.map((p) => ({ name: p.name, score: scores[p.id] ?? 0 }))}
+              onRestart={restart}
+            />
           )}
 
           <Board
@@ -274,6 +329,7 @@ export function HostGame({ questions, onBack }: Props) {
               buzzOpen={buzzOpen}
               buzzWinner={buzzWinner}
               revealed={revealed}
+              secondsLeft={secondsLeft}
               onCorrect={() => award(1)}
               onWrong={() => award(-1)}
               onReopen={reopen}
@@ -294,6 +350,7 @@ type PanelProps = {
   buzzOpen: boolean
   buzzWinner: Self | null
   revealed: boolean
+  secondsLeft: number | null
   onCorrect: () => void
   onWrong: () => void
   onReopen: () => void
@@ -308,6 +365,7 @@ function HostQuestionPanel({
   buzzOpen,
   buzzWinner,
   revealed,
+  secondsLeft,
   onCorrect,
   onWrong,
   onReopen,
@@ -338,7 +396,12 @@ function HostQuestionPanel({
 
         <div className={'buzz-status ' + (buzzWinner ? 'won' : buzzOpen ? 'open' : 'closed')}>
           {buzzWinner ? (
-            <>🔔 <strong>{buzzWinner.name}</strong> se adelantó — que responda</>
+            <>
+              🔔 <strong>{buzzWinner.name}</strong> se adelantó — que responda
+              {secondsLeft != null && (
+                <span className={'countdown' + (secondsLeft <= 3 ? ' urgent' : '')}> ⏱ {secondsLeft}s</span>
+              )}
+            </>
           ) : buzzOpen ? (
             <>⏱️ Pulsadores abiertos — esperando a que alguien pulse…</>
           ) : (

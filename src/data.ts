@@ -20,6 +20,8 @@ const flag = (code: string) => `https://flagcdn.com/w640/${code}.png`
 // Siluetas de países: imágenes en negro vía mapsicon (código ISO en minúsculas)
 const shape = (code: string) =>
   `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${code}/1024.png`
+// Logos de marca: iconos a color vía Simple Icons CDN (slug de la marca)
+const brand = (slug: string) => `https://cdn.simpleicons.org/${slug}`
 
 export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'banderas', name: 'Banderas', icon: '🚩' },
@@ -40,8 +42,10 @@ export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'anime', name: 'Anime y manga', icon: '🍥' },
   { id: 'internet', name: 'Internet y memes', icon: '📱' },
   { id: 'espacio', name: 'Espacio', icon: '🚀' },
-  { id: 'arte', name: 'Arte', icon: '🎨' },
-  { id: 'refranes', name: 'Refranes y lengua', icon: '📖' },
+  { id: 'series', name: 'Series y streaming', icon: '📺' },
+  { id: 'famosos', name: 'Famosos y redes', icon: '⭐' },
+  { id: 'logos', name: 'Marcas y logos', icon: '™️' },
+  { id: 'emoji', name: 'Adivina el emoji', icon: '😄' },
 ]
 
 /** Número de categorías que entran en el tablero de cada partida. */
@@ -254,17 +258,58 @@ export const DEFAULT_QUESTIONS: Question[] = [
   { id: 'esp-4', categoryId: 'espacio', points: 750, prompt: '¿Quién fue el primer ser humano en pisar la Luna?', answer: 'Neil Armstrong' },
   { id: 'esp-5', categoryId: 'espacio', points: 1000, prompt: '¿Cuál es el planeta más cercano al Sol?', answer: 'Mercurio' },
 
-  // ---------- ARTE ----------
-  { id: 'art-1', categoryId: 'arte', points: 100, prompt: '¿Quién pintó "La noche estrellada" y se cortó una oreja?', answer: 'Vincent van Gogh' },
-  { id: 'art-2', categoryId: 'arte', points: 250, prompt: '¿Qué pintor malagueño es famoso por el cubismo y el "Guernica"?', answer: 'Pablo Picasso' },
-  { id: 'art-3', categoryId: 'arte', points: 500, prompt: '¿En qué museo de Madrid está "Las meninas" de Velázquez?', answer: 'El Museo del Prado' },
-  { id: 'art-4', categoryId: 'arte', points: 750, prompt: '¿Qué artista pintó el techo de la Capilla Sixtina?', answer: 'Miguel Ángel' },
-  { id: 'art-5', categoryId: 'arte', points: 1000, prompt: '¿A qué movimiento artístico pertenecen los relojes derretidos de Dalí?', answer: 'El surrealismo' },
+  // ---------- SERIES Y STREAMING ----------
+  { id: 'ser-1', categoryId: 'series', points: 100, prompt: '¿En qué plataforma se estrenó "Stranger Things"?', answer: 'Netflix' },
+  { id: 'ser-2', categoryId: 'series', points: 100, prompt: '¿Cómo se llama la serie surcoreana de Netflix con juegos infantiles mortales por dinero?', answer: 'El juego del calamar (Squid Game)' },
+  { id: 'ser-3', categoryId: 'series', points: 250, prompt: 'En esta serie, el profesor Walter White cocina metanfetamina. ¿Cómo se titula?', answer: 'Breaking Bad' },
+  { id: 'ser-4', categoryId: 'series', points: 250, prompt: '¿Qué serie española de Netflix sigue los crímenes en el instituto Las Encinas?', answer: 'Élite' },
+  { id: 'ser-5', categoryId: 'series', points: 500, prompt: '¿Qué serie animada de Matt Groening lleva más de 30 temporadas en Springfield?', answer: 'Los Simpson' },
+  { id: 'ser-6', categoryId: 'series', points: 500, prompt: '¿Qué serie de HBO sobre un brote de un hongo zombi está basada en un videojuego?', answer: 'The Last of Us' },
+  { id: 'ser-7', categoryId: 'series', points: 750, prompt: 'En "The Mandalorian", ¿cómo se conoce popularmente a la criatura Grogu?', answer: 'Baby Yoda' },
+  { id: 'ser-8', categoryId: 'series', points: 750, prompt: '¿Cómo se titula la precuela de "Juego de Tronos" centrada en la casa Targaryen?', answer: 'La Casa del Dragón' },
+  { id: 'ser-9', categoryId: 'series', points: 1000, prompt: '¿Qué serie de Netflix narra el reinado de la reina Isabel II del Reino Unido?', answer: 'The Crown' },
+  { id: 'ser-10', categoryId: 'series', points: 1000, prompt: '¿Cómo se llama la serie de Disney+ protagonizada por el dios del engaño de Marvel?', answer: 'Loki' },
 
-  // ---------- REFRANES Y LENGUA ----------
-  { id: 'ref-1', categoryId: 'refranes', points: 100, prompt: 'Completa el refrán: "A caballo regalado…"', answer: '"…no le mires el diente."' },
-  { id: 'ref-2', categoryId: 'refranes', points: 250, prompt: '¿Cuántas letras tiene el abecedario español (incluida la Ñ)?', answer: '27' },
-  { id: 'ref-3', categoryId: 'refranes', points: 500, prompt: 'Completa el refrán: "Más vale pájaro en mano…"', answer: '"…que ciento volando."' },
-  { id: 'ref-4', categoryId: 'refranes', points: 750, prompt: '¿Qué figura literaria compara dos cosas usando "como" (p. ej. "dientes como perlas")?', answer: 'El símil (la comparación)' },
-  { id: 'ref-5', categoryId: 'refranes', points: 1000, prompt: '¿Quién escribió "Don Quijote de la Mancha"?', answer: 'Miguel de Cervantes' },
+  // ---------- FAMOSOS Y REDES ----------
+  { id: 'fam-1', categoryId: 'famosos', points: 100, prompt: '¿Qué cantante canadiense saltó a la fama de adolescente con la canción "Baby" en YouTube?', answer: 'Justin Bieber' },
+  { id: 'fam-2', categoryId: 'famosos', points: 100, prompt: '¿Qué streamer español, antes top de YouTube, es conocido como "el Rubius"?', answer: 'ElRubius (Rubén Doblas)' },
+  { id: 'fam-3', categoryId: 'famosos', points: 250, prompt: '¿Qué streamer español organiza "La Velada del Año", su evento de boxeo entre creadores?', answer: 'Ibai Llanos' },
+  { id: 'fam-4', categoryId: 'famosos', points: 250, prompt: '¿Qué empresario es dueño de Tesla y SpaceX y compró Twitter (ahora X)?', answer: 'Elon Musk' },
+  { id: 'fam-5', categoryId: 'famosos', points: 500, prompt: '¿Qué youtuber estadounidense es famoso por sus retos millonarios y regalar dinero?', answer: 'MrBeast' },
+  { id: 'fam-6', categoryId: 'famosos', points: 500, prompt: '¿Qué cantante hizo "The Eras Tour", la gira más taquillera de la historia?', answer: 'Taylor Swift' },
+  { id: 'fam-7', categoryId: 'famosos', points: 750, prompt: '¿Qué futbolista portugués es de las personas con más seguidores en Instagram?', answer: 'Cristiano Ronaldo' },
+  { id: 'fam-8', categoryId: 'famosos', points: 750, prompt: '¿Qué artista puertorriqueño fue varios años el más escuchado del mundo en Spotify?', answer: 'Bad Bunny' },
+  { id: 'fam-9', categoryId: 'famosos', points: 1000, prompt: '¿Cuál es el apellido de la famosa familia del reality con Kim, Kylie y Kendall?', answer: 'Kardashian (Kardashian-Jenner)' },
+  { id: 'fam-10', categoryId: 'famosos', points: 1000, prompt: '¿Qué creador español, de los pioneros del humor en internet, se llama Raúl Álvarez?', answer: 'AuronPlay' },
+
+  // ---------- MARCAS Y LOGOS ----------
+  { id: 'log-1', categoryId: 'logos', points: 100, prompt: '¿De qué marca es este logo?', answer: 'Nike', image: brand('nike') },
+  { id: 'log-2', categoryId: 'logos', points: 100, prompt: '¿De qué marca es este logo?', answer: "McDonald's", image: brand('mcdonalds') },
+  { id: 'log-3', categoryId: 'logos', points: 250, prompt: '¿De qué marca es este logo?', answer: 'Adidas', image: brand('adidas') },
+  { id: 'log-4', categoryId: 'logos', points: 250, prompt: '¿De qué marca es este logo?', answer: 'Spotify', image: brand('spotify') },
+  { id: 'log-5', categoryId: 'logos', points: 500, prompt: '¿De qué marca es este logo?', answer: 'Netflix', image: brand('netflix') },
+  { id: 'log-6', categoryId: 'logos', points: 500, prompt: '¿De qué marca es este logo?', answer: 'Starbucks', image: brand('starbucks') },
+  { id: 'log-7', categoryId: 'logos', points: 750, prompt: '¿De qué marca es este logo?', answer: 'PlayStation', image: brand('playstation') },
+  { id: 'log-8', categoryId: 'logos', points: 750, prompt: '¿De qué marca es este logo?', answer: 'LEGO', image: brand('lego') },
+  { id: 'log-9', categoryId: 'logos', points: 1000, prompt: '¿De qué marca es este logo?', answer: 'Ferrari', image: brand('ferrari') },
+  { id: 'log-10', categoryId: 'logos', points: 1000, prompt: '¿De qué marca es este logo?', answer: 'Lacoste', image: brand('lacoste') },
+
+  // ---------- ADIVINA EL EMOJI ----------
+  { id: 'emo-1', categoryId: 'emoji', points: 100, prompt: '¿Qué película es? 🦁👑', answer: 'El Rey León' },
+  { id: 'emo-2', categoryId: 'emoji', points: 100, prompt: '¿Qué superhéroe es? 🕷️🧑', answer: 'Spider-Man' },
+  { id: 'emo-3', categoryId: 'emoji', points: 250, prompt: '¿Qué película de Disney es? ❄️👸⛄', answer: 'Frozen' },
+  { id: 'emo-4', categoryId: 'emoji', points: 250, prompt: '¿Qué saga es? ⚡️🧙‍♂️🦉', answer: 'Harry Potter' },
+  { id: 'emo-5', categoryId: 'emoji', points: 500, prompt: '¿Qué película es? 🐠🔍👨‍👧', answer: 'Buscando a Nemo' },
+  { id: 'emo-6', categoryId: 'emoji', points: 500, prompt: '¿Qué película es? 🚢🧊💔', answer: 'Titanic' },
+  { id: 'emo-7', categoryId: 'emoji', points: 750, prompt: '¿Qué película es? 🦖🏝️🧬', answer: 'Jurassic Park (Parque Jurásico)' },
+  { id: 'emo-8', categoryId: 'emoji', points: 750, prompt: '¿Qué película es? 👽📞🏠🚲', answer: 'E.T., el extraterrestre' },
+  { id: 'emo-9', categoryId: 'emoji', points: 1000, prompt: '¿Qué saga es? 💍🌋🧙‍♂️🧝', answer: 'El Señor de los Anillos' },
+  { id: 'emo-10', categoryId: 'emoji', points: 1000, prompt: '¿Qué película de terror es? 🤡🎈🚸', answer: 'It (Eso)' },
+
+  // ---------- ACTUALIDAD (preguntas recientes; conviene refrescarlas con el tiempo) ----------
+  { id: 'cin-11', categoryId: 'cine', points: 250, prompt: '¿Qué película rosa de Greta Gerwig fue un fenómeno mundial en 2023?', answer: 'Barbie' },
+  { id: 'cin-12', categoryId: 'cine', points: 750, prompt: '"Oppenheimer" ganó el Óscar a Mejor Película en 2024. ¿Quién la dirigió?', answer: 'Christopher Nolan' },
+  { id: 'mus-11', categoryId: 'musica', points: 500, prompt: '¿Cómo se llama la gira récord de Taylor Swift de 2023-2024?', answer: 'The Eras Tour' },
+  { id: 'dep-11', categoryId: 'deportes', points: 250, prompt: '¿Qué selección ganó la Eurocopa de fútbol de 2024?', answer: 'España' },
+  { id: 'dep-12', categoryId: 'deportes', points: 750, prompt: '¿Qué centrocampista español del Manchester City ganó el Balón de Oro 2024?', answer: 'Rodri (Rodrigo Hernández)' },
 ]
